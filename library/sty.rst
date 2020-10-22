@@ -309,7 +309,6 @@ Classes
    sty.CAN.rst
    sty.ExtInt.rst
    sty.Flash.rst
-   sty.I2C.rst
    sty.LED.rst
    sty.Pin.rst
    sty.RTC.rst

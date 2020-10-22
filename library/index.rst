@@ -108,7 +108,6 @@ the following libraries.
    :maxdepth: 1
 
    btree.rst
-   framebuf.rst
    machine.rst
    micropython.rst
    network.rst
@@ -127,19 +126,7 @@ that platform.
 
 To write portable code use functions and classes from the :mod:`machine` module.
 To access platform-specific hardware use the appropriate library, e.g.
-:mod:`pyb` in the case of the Pyboard.
-
-
-Libraries specific to the pyboard
----------------------------------
-
-The following libraries are specific to the pyboard.
-
-.. toctree::
-  :maxdepth: 2
-
-  pyb.rst
-  lcd160cr.rst
+:mod:`sty` in the case of the stalya boards.
 
 Libraries specific to the stalya
 ---------------------------------
@@ -150,28 +137,3 @@ The following libraries are specific to the stalya boards.
   :maxdepth: 2
 
   sty.rst
-
-
-Libraries specific to the WiPy
-------------------------------
-
-The following libraries and classes are specific to the WiPy.
-
-.. toctree::
-  :maxdepth: 2
-
-  wipy.rst
-  machine.ADCWiPy.rst
-  machine.TimerWiPy.rst
-
-
-Libraries specific to the ESP8266 and ESP32
--------------------------------------------
-
-The following libraries are specific to the ESP8266 and ESP32.
-
-.. toctree::
-  :maxdepth: 2
-
-  esp.rst
-  esp32.rst

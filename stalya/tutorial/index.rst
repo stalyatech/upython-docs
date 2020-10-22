@@ -1,11 +1,11 @@
 .. _stalya_tutorial:
 
-MicroPython tutorial for the stalya
-====================================
+MicroPython tutorial for the stalya boards
+==========================================
 
-This tutorial is intended to get you started with your stalya.
-All you need is a stalya and a micro-USB cable to connect it to
-your PC.  If it is your first time, it is recommended to follow
+This tutorial is intended to get you started with your stalya boards.
+All you need is a stalya boards and a micro-USB cable to connect 
+it to your PC. If it is your first time, it is recommended to follow
 the tutorial through in the order below.
 
 .. toctree::
@@ -16,7 +16,6 @@ the tutorial through in the order below.
    script.rst
    repl.rst
    leds.rst
-   switch.rst
    imu.rst
    reset.rst
    usb_mouse.rst
@@ -32,10 +31,6 @@ Tutorials requiring extra components
    :numbered:
 
    servo.rst
-   fading_led.rst
-   lcd_skin.rst
-   amp_skin.rst
-   lcd160cr_skin.rst
 
 Tips, tricks and useful things to know
 --------------------------------------

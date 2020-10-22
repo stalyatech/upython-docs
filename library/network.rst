@@ -151,9 +151,6 @@ provide a way to control networking interfaces of various kinds.
    network.LAN.rst
    network.GSM.rst
    network.WLAN.rst
-   network.WLANWiPy.rst
-   network.CC3K.rst
-   network.WIZNET5K.rst
 
 Network functions
 =================

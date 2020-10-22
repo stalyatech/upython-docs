@@ -31,7 +31,7 @@ Use it something like this::
 
     import sty
 
-    pin_x1 = sty.Pin('X1', sty.Pin.IN, sty.Pin.PULL_DOWN)
+    pin_din1 = sty.Pin('DIN1', sty.Pin.IN, sty.Pin.PULL_DOWN)
     while True:
-        wait_pin_change(pin_x1)
-        sty.LED(4).toggle()
+        wait_pin_change(pin_din1)
+        sty.LED(1).toggle()

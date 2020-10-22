@@ -16,7 +16,7 @@ The filesystem is typically backed by internal flash memory on the device, but
 can also use external flash, RAM, or a custom block device.
 
 On some ports (e.g. STM32), the filesystem may also be available over USB MSC to
-a host PC. :ref:`pyboard_py` also provides a way for the host PC to access to
+a host PC. :ref:`stalya_py` also provides a way for the host PC to access to
 the filesystem on all ports.
 
 Note: This is mainly for use on bare-metal ports like STM32 and ESP32. On ports
@@ -32,9 +32,8 @@ filesystems are combined into a single virtual filesystem, starting at the root
 startup the working directory is changed to where the primary filesystem is
 mounted.
 
-On STM32 / Pyboard, the internal flash is mounted at ``/flash``, and optionally
-the SDCard at ``/sd``. On ESP8266/ESP32, the primary filesystem is mounted at
-``/``.
+On STM32 / stalya board, the internal flash is mounted at ``/flash``, and optionally
+the SDCard at ``/sd``. 
 
 Block devices
 -------------
@@ -53,33 +52,19 @@ MicroPython will attempt to create a FAT filesystem spanning the entire flash.
 Ports can also provide a mechanism to "factory reset" the primary flash, usually
 by some combination of button presses at power on.
 
-STM32 / Pyboard
-...............
+STM32 / stalya boards
+.....................
 
-The :ref:`pyb.Flash <pyb.Flash>` class provides access to the internal flash. On some
-boards which have larger external flash (e.g. Pyboard D), it will use that
+The :ref:`sty.Flash <sty.Flash>` class provides access to the internal flash. On some
+boards which have larger external flash, it will use that
 instead. The ``start`` kwarg should always be specified, i.e.
-``pyb.Flash(start=0)``.
+``sty.Flash(start=0)``.
 
 Note: For backwards compatibility, when constructed with no arguments (i.e.
-``pyb.Flash()``), it only implements the simple block interface and reflects the
+``sty.Flash()``), it only implements the simple block interface and reflects the
 virtual device presented to USB MSC (i.e. it includes a virtual partition table
 at the start).
 
-ESP8266
-.......
-
-The internal flash is exposed as a block device object which is created in the
-``flashbdev`` module on start up. This object is by default added as a global
-variable so it can usually be accessed simply as ``bdev``. This implements the
-extended interface.
-
-ESP32
-.....
-
-The :class:`esp32.Partition` class implements a block device for partitions
-defined for the board. Like ESP8266, there is a global variable ``bdev`` which
-points to the default partition. This implements the extended interface.
 
 Custom block devices
 ~~~~~~~~~~~~~~~~~~~~
@@ -176,11 +161,7 @@ enabled in a custom firmware build.
 ====================  =====  ===========  ===========
 Board                 FAT    littlefs v1  littlefs v2
 ====================  =====  ===========  ===========
-pyboard 1.0, 1.1, D   Yes    No           Yes
-Other STM32           Yes    No           No
-ESP8266 (1M)          No     No           Yes
-ESP8266 (2M+)         Yes    No           Yes
-ESP32                 Yes    No           Yes
+stalya boards         Yes    No           No
 ====================  =====  ===========  ===========
 
 FAT
@@ -196,17 +177,11 @@ recommended to use littlefs instead.
 
 To format the entire flash using FAT::
 
-    # ESP8266 and ESP32
-    import os
-    os.umount('/')
-    os.VfsFat.mkfs(bdev)
-    os.mount(bdev, '/')
-
     # STM32
-    import os, pyb
+    import os, sty
     os.umount('/flash')
-    os.VfsFat.mkfs(pyb.Flash(start=0))
-    os.mount(pyb.Flash(start=0), '/flash')
+    os.VfsFat.mkfs(sty.Flash(start=0))
+    os.mount(sty.Flash(start=0), '/flash')
     os.chdir('/flash')
 
 Littlefs
@@ -237,25 +212,25 @@ To format the entire flash using littlefs v2::
     os.mount(bdev, '/')
 
     # STM32
-    import os, pyb
+    import os, sty
     os.umount('/flash')
-    os.VfsLfs2.mkfs(pyb.Flash(start=0))
-    os.mount(pyb.Flash(start=0), '/flash')
+    os.VfsLfs2.mkfs(sty.Flash(start=0))
+    os.mount(sty.Flash(start=0), '/flash')
     os.chdir('/flash')
 
 Hybrid (STM32)
 ~~~~~~~~~~~~~~
 
-By using the ``start`` and ``len`` kwargs to :class:`pyb.Flash`, you can create
+By using the ``start`` and ``len`` kwargs to :class:`sty.Flash`, you can create
 block devices spanning a subset of the flash device.
 
 For example, to configure the first 256kiB as FAT (and available over USB MSC),
 and the remainder as littlefs::
 
-    import os, pyb
+    import os, sty
     os.umount('/flash')
-    p1 = pyb.Flash(start=0, len=256*1024)
-    p2 = pyb.Flash(start=256*1024)
+    p1 = sty.Flash(start=0, len=256*1024)
+    p2 = sty.Flash(start=256*1024)
     os.VfsFat.mkfs(p1)
     os.VfsLfs2.mkfs(p2)
     os.mount(p1, '/flash')
@@ -270,8 +245,8 @@ failure, etc.
 The partition at offset ``0`` will be mounted automatically (and the filesystem
 type automatically detected), but you can add::
 
-    import os, pyb
-    p2 = pyb.Flash(start=256*1024)
+    import os, sty
+    p2 = sty.Flash(start=256*1024)
     os.mount(p2, '/data')
 
 to ``boot.py`` to mount the data partition.

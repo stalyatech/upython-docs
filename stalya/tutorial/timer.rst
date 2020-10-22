@@ -50,8 +50,7 @@ Timer callbacks
 ---------------
 
 The next thing we can do is register a callback function for the timer to
-execute when it triggers (see the :ref:`switch tutorial <pyboard_tutorial_switch>`
-for an introduction to callback functions)::
+execute when it triggers::
 
     >>> tim.callback(lambda t:sty.LED(1).toggle())
 
