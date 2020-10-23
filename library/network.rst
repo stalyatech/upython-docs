@@ -150,7 +150,6 @@ provide a way to control networking interfaces of various kinds.
 
    network.LAN.rst
    network.GSM.rst
-   network.WLAN.rst
 
 Network functions
 =================

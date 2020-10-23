@@ -32,7 +32,7 @@ filesystems are combined into a single virtual filesystem, starting at the root
 startup the working directory is changed to where the primary filesystem is
 mounted.
 
-On STM32 / stalya board, the internal flash is mounted at ``/flash``, and optionally
+On STM32 / simpleRTK, the internal flash is mounted at ``/flash``, and optionally
 the SDCard at ``/sd``. 
 
 Block devices
@@ -52,7 +52,7 @@ MicroPython will attempt to create a FAT filesystem spanning the entire flash.
 Ports can also provide a mechanism to "factory reset" the primary flash, usually
 by some combination of button presses at power on.
 
-STM32 / stalya boards
+STM32 / simpleRTK
 .....................
 
 The :ref:`sty.Flash <sty.Flash>` class provides access to the internal flash. On some
@@ -161,7 +161,7 @@ enabled in a custom firmware build.
 ====================  =====  ===========  ===========
 Board                 FAT    littlefs v1  littlefs v2
 ====================  =====  ===========  ===========
-stalya boards         Yes    No           No
+simpleRTK             Yes    No           No
 ====================  =====  ===========  ===========
 
 FAT

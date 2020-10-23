@@ -44,12 +44,12 @@ For something a bit more complicated, let's turn on an LED::
 This code uses a few new concepts:
 
   - ``stm`` is a module which provides a set of constants for easy
-    access to the registers of the stalya's microcontroller.  Try
+    access to the registers of the simpleRTK's microcontroller.  Try
     running ``import stm`` and then ``help(stm)`` at the REPL.  It will
     give you a list of all the available constants.
 
   - ``stm.GPIOA`` is the address in memory of the GPIOA peripheral.
-    On the stalya, the red LED is on port A, pin PA13.
+    On the simpleRTK, the red LED is on port A, pin PA13.
 
   - ``movwt`` moves a 32-bit number into a register.  It is a convenience
     function that turns into 2 thumb instructions: ``movw`` followed by ``movt``.

@@ -23,8 +23,8 @@ Example::
         uasyncio.create_task(blink(led2, 400))
         await uasyncio.sleep_ms(10_000)
 
-    # Running on a pyboard
-    from pyb import LED
+    # Running on a simpleRTK
+    from sty import LED
     uasyncio.run(main(LED(1), LED(2)))
 
     # Running on a generic board

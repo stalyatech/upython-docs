@@ -44,7 +44,7 @@ Methods
 .. method:: RTC.wakeup(timeout, callback=None)
 
    Set the RTC wakeup timer to trigger repeatedly at every ``timeout``
-   milliseconds.  This trigger can wake the pyboard from both the sleep
+   milliseconds.  This trigger can wake the simpleRTK from both the sleep
    states: :meth:`sty.stop` and :meth:`sty.standby`.
 
    If ``timeout`` is ``None`` then the wakeup timer is disabled.

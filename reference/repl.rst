@@ -158,7 +158,7 @@ For example, if you reset your MicroPython board, and you execute a dir()
 command, you'd see something like this:
 
     >>> dir()
-    ['__name__', 'pyb']
+    ['__name__', 'sty']
 
 Now create some variables and repeat the dir() command:
 
@@ -166,7 +166,7 @@ Now create some variables and repeat the dir() command:
     >>> j = 23
     >>> x = 'abc'
     >>> dir()
-    ['j', 'x', '__name__', 'pyb', 'i']
+    ['j', 'x', '__name__', 'sty', 'i']
     >>>
 
 Now if you enter Ctrl-D, and repeat the dir() command, you'll see that your
@@ -179,7 +179,7 @@ variables no longer exist:
     MicroPython v1.5-51-g6f70283-dirty on 2015-10-30; PYBv1.0 with STM32F405RG
     Type "help()" for more information.
     >>> dir()
-    ['__name__', 'pyb']
+    ['__name__', 'sty']
     >>>
 
 The special variable _ (underscore)
@@ -207,6 +207,6 @@ a Ctrl-D. The Ctrl-D will be acknowledged by 'OK' and then the python code will
 be compiled and executed. Any output (or errors) will be sent back. Entering
 Ctrl-B will leave raw mode and return the the regular (aka friendly) REPL.
 
-The ``tools/pyboard.py`` program uses the raw REPL to execute python files on the
+The ``tools/stalya.py`` program uses the raw REPL to execute python files on the
 MicroPython board.
 

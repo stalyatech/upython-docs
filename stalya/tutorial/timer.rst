@@ -1,7 +1,7 @@
 The Timers
 ==========
 
-The stalya has 14 timers which each consist of an independent counter
+The simpleRTK has 14 timers which each consist of an independent counter
 running at a user-defined frequency.  They can be set up to run a function
 at specific intervals.
 The 14 timers are numbered 1 through 14, but 3 is reserved
@@ -17,7 +17,7 @@ Now let's see what we just created::
     >>> tim
     Timer(4)
 
-The stalya is telling us that ``tim`` is attached to timer number 4, but
+The simpleRTK is telling us that ``tim`` is attached to timer number 4, but
 it's not yet initialised.  So let's initialise it to trigger at 10 Hz
 (that's 10 times per second)::
 
@@ -77,7 +77,7 @@ We can create 2 timers and run them independently::
     >>> tim7.callback(lambda t: sty.LED(2).toggle())
 
 Because the callbacks are proper hardware interrupts, we can continue
-to use the stalya for other things while these timers are running.
+to use the simpleRTK for other things while these timers are running.
 
 Making a microsecond counter
 ----------------------------

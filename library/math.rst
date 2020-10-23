@@ -9,7 +9,7 @@
 The ``math`` module provides some basic mathematical functions for
 working with floating-point numbers.
 
-*Note:* On the pyboard, floating-point numbers have 32-bit precision.
+*Note:* On the simpleRTK, floating-point numbers have 32-bit precision.
 
 Availability: not available on WiPy. Floating point support required
 for this module.

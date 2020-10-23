@@ -6,8 +6,8 @@ class CAN -- controller area network communication bus
 
 CAN implements the standard CAN communications protocol.  At
 the physical level it consists of 2 lines: RX and TX.  Note that
-to connect the pyboard to a CAN bus you must use a CAN transceiver
-to convert the CAN logic signals from the pyboard to the correct
+to connect the simpleRTK to a CAN bus you must use a CAN transceiver
+to convert the CAN logic signals from the simpleRTK to the correct
 voltage levels on the bus.
 
 Example usage (works without anything connected)::

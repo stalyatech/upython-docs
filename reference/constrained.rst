@@ -15,7 +15,7 @@ documentation.
 Flash memory
 ------------
 
-On the Pyboard the simple way to address the limited capacity is to fit a micro
+On the simpleRTK the simple way to address the limited capacity is to fit a micro
 SD card. In some cases this is impractical, either because the device does not
 have an SD card slot or for reasons of cost or power consumption; hence the
 on-chip flash must be used. The firmware including the MicroPython subsystem is
@@ -397,7 +397,7 @@ Control of garbage collection
 A GC can be demanded at any time by issuing `gc.collect()`. It is advantageous
 to do this at intervals, firstly to pre-empt fragmentation and secondly for
 performance. A GC can take several milliseconds but is quicker when there is
-little work to do (about 1ms on the Pyboard). An explicit call can minimise that
+little work to do (about 1ms on the simpleRTK). An explicit call can minimise that
 delay while ensuring it occurs at points in the program when it is acceptable.
 
 Automatic GC is provoked under the following circumstances. When an attempt at

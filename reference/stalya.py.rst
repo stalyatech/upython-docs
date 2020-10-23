@@ -16,7 +16,7 @@ Despite the name, ``stalya.py`` works on all MicroPython ports that support the
 raw REPL (including STM32, ESP32, ESP8266, NRF).
 
 You can download the latest version from `GitHub
-<https://github.com/micropython/micropython/blob/master/tools/stalya.py>`_. The
+<https://github.com/stalyatech/micropython/blob/master/tools/stalya.py>`_. The
 only dependency is the ``pyserial`` library which can be installed from PiPy or
 your system package manager.
 
@@ -137,8 +137,8 @@ MicroPython board.
 .. code-block:: python
 
     import stalya
-    pyb = stalya.Pyboard('/dev/ttyACM0', 115200)
-    pyb.enter_raw_repl()
-    ret = pyb.exec('print(1+1)')
+    sty = stalya.simpleRTK('/dev/ttyACM0', 115200)
+    sty.enter_raw_repl()
+    ret = sty.exec('print(1+1)')
     print(ret)
-    pyb.exit_raw_repl()
+    sty.exit_raw_repl()

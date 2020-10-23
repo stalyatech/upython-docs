@@ -74,3 +74,31 @@ Methods
    mac            MAC address (bytes)
    trace          Enable/Disable trace status (boolean)
    =============  ===========
+
+Socket sample with ethernet NIC
+-------------------------------
+
+::
+
+    import sty, utime
+    import usocket
+    import network
+
+    nic = network.LAN()
+    nic.active(True)
+    nic.ifconfig('dhcp')
+
+    addr = usocket.getaddrinfo('micropython.org', 80)[0][-1]
+    print('Host: %s:%d' % (addr[0], addr[1]))
+    sock = usocket.socket(usocket.AF_INET, usocket.SOCK_STREAM)
+    sock.connect(addr)
+    sock.send(b'GET / HTTP/1.1\r\nHost: ardusimple.com\r\n\r\n')
+
+    sock.settimeout(10.0)
+    try:
+        data = sock.recv(1000)
+        print(data)
+    except:
+        print('Timeout!\r\n')
+
+    sock.close()

@@ -1,7 +1,7 @@
 .. _stalya_quickref:
 
-Quick reference for the stalya boards
-=====================================
+Quick reference for the simpleRTK
+=================================
 
 The below pinout is for simpleRTK-SBCv1.0.
 
@@ -11,7 +11,7 @@ The below pinout is for simpleRTK-SBCv1.0.
       :alt: SBCv1.0 pinout
       :width: 800px
 
-Below is a quick reference for the stalya boards.  If it is your first time working with
+Below is a quick reference for the simpleRTK.  If it is your first time working with
 this boards please consider reading the following sections first:
 
 .. toctree::

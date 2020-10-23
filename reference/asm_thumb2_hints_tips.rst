@@ -208,7 +208,7 @@ indicates that each subsequent argument is a two byte quantity.
 Overcoming MicroPython's integer restriction
 --------------------------------------------
 
-The Pyboard chip includes a CRC generator. Its use presents a problem in
+The simpleRTK chip includes a CRC generator. Its use presents a problem in
 MicroPython because the returned values cover the full gamut of 32 bit
 quantities whereas small integers in MicroPython cannot have differing values
 in bits 30 and 31. This limitation is overcome with the following code, which

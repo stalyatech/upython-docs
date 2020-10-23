@@ -2,29 +2,29 @@ Getting a MicroPython REPL prompt
 =================================
 
 REPL stands for Read Evaluate Print Loop, and is the name given to the
-interactive MicroPython prompt that you can access on the stalya.  Using
+interactive MicroPython prompt that you can access on the simpleRTK.  Using
 the REPL is by far the easiest way to test out your code and run commands.
 You can use the REPL in addition to writing scripts in ``main.py``.
 
-To use the REPL, you must connect to the serial USB device on the stalya.
+To use the REPL, you must connect to the serial USB device on the simpleRTK.
 How you do this depends on your operating system.
 
 Windows
 -------
 
-You need to install the stalya driver to use the serial USB device.
-The driver is on the stalya's USB flash drive, and is called ``pybcdc.inf``.
+You need to install the simpleRTK driver to use the serial USB device.
+The driver is on the simpleRTK's USB flash drive, and is called ``stycdc.inf``.
 
 To install this driver you need to go to Device Manager
-for your computer, find the stalya in the list of devices (it should have
+for your computer, find the simpleRTK in the list of devices (it should have
 a warning sign next to it because it's not working yet), right click on
-the stalya device, select Properties, then Install Driver.  You need to
+the simpleRTK device, select Properties, then Install Driver.  You need to
 then select the option to find the driver manually (don't use Windows auto update),
-navigate to the stalya's USB drive, and select that.  It should then install.
-After installing, go back to the Device Manager to find the installed stalya,
+navigate to the simpleRTK's USB drive, and select that.  It should then install.
+After installing, go back to the Device Manager to find the installed simpleRTK,
 and see which COM port it is (eg COM4).
 More comprehensive instructions can be found in the
-`Guide for stalya on Windows (PDF) <http://micropython.org/resources/Micro-Python-Windows-setup.pdf>`_.
+`Guide for simpleRTK on Windows (PDF) <http://micropython.org/resources/Micro-Python-Windows-setup.pdf>`_.
 Please consult this guide if you are having problems installing the driver.
 
 You now need to run your terminal program.  You can use HyperTerminal if you
@@ -59,18 +59,18 @@ or use sudo).
 Using the REPL prompt
 ---------------------
 
-Now let's try running some MicroPython code directly on the stalya.
+Now let's try running some MicroPython code directly on the simpleRTK.
 
 With your serial program open (PuTTY, screen, picocom, etc) you may see a blank
 screen with a flashing cursor.  Press Enter and you should be presented with a
 MicroPython prompt, i.e. ``>>>``.  Let's make sure it is working with the obligatory test::
 
-    >>> print("hello stalya!")
-    hello stalya!
+    >>> print("hello simpleRTK!")
+    hello simpleRTK!
 
 In the above, you should not type in the ``>>>`` characters.  They are there to
 indicate that you should type the text after it at the prompt.  In the end, once
-you have entered the text ``print("hello stalya!")`` and pressed Enter, the output
+you have entered the text ``print("hello simpleRTK!")`` and pressed Enter, the output
 on your screen should look like it does above.
 
 If you already know some python you can now try some basic commands here. 
@@ -103,8 +103,8 @@ at the MicroPython prompt, which performs a soft reset.  You will see a message 
     >>>
 
 If that isn't working you can perform a hard reset (turn-it-off-and-on-again) by pressing the RST
-switch (the small black button closest to the micro-USB socket on the board). This will end your
-session, disconnecting whatever program (PuTTY, screen, etc) that you used to connect to the stalya.
+switch (the small black button closest to the USB Type-C socket on the board). This will end your
+session, disconnecting whatever program (PuTTY, screen, etc) that you used to connect to the simpleRTK.
 
 If you are going to do a hard-reset, it's recommended to first close your serial program and eject/unmount
-the stalya drive.
+the simpleRTK drive.

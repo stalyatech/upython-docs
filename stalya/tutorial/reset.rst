@@ -1,8 +1,8 @@
 Safe mode and factory reset
 ===========================
 
-If something goes wrong with your stalya, don't panic!  It is almost
-impossible for you to break the stalya by programming the wrong thing.
+If something goes wrong with your simpleRTK, don't panic!  It is almost
+impossible for you to break the simpleRTK by programming the wrong thing.
 
 The first thing to try is to enter safe mode: this temporarily skips
 execution of ``boot.py`` and ``main.py`` and gives default USB settings.
@@ -15,7 +15,7 @@ Safe mode
 
 To enter safe mode, do the following steps:
 
-1. Connect the stalya to USB so it powers up.
+1. Connect the simpleRTK to USB so it powers up.
 2. Hold down the USR switch.
 3. While still holding down USR, press and release the RST switch.
 4. The LEDs will then cycle green to orange to green+orange and back again.
@@ -25,28 +25,28 @@ To enter safe mode, do the following steps:
 7. You are now in safe mode.
 
 In safe mode, the ``boot.py`` and ``main.py`` files are not executed, and so
-the stalya boots up with default settings.  This means you now have access
+the simpleRTK boots up with default settings.  This means you now have access
 to the filesystem (the USB drive should appear), and you can edit ``boot.py``
 and ``main.py`` to fix any problems.
 
 Entering safe mode is temporary, and does not make any changes to the
-files on the stalya.
+files on the simpleRTK.
 
 Factory reset the filesystem
 ----------------------------
 
-If you stalya's filesystem gets corrupted (for example, you forgot to
+If you simpleRTK's filesystem gets corrupted (for example, you forgot to
 eject/unmount it), or you have some code in ``boot.py`` or ``main.py`` which
 you can't escape from, then you can reset the filesystem.
 
-Resetting the filesystem deletes all files on the internal stalya storage
+Resetting the filesystem deletes all files on the internal simpleRTK storage
 (not the SD card), and restores the files ``boot.py``, ``main.py``, ``README.txt``
 and ``pybcdc.inf`` back to their original state.
 
 To do a factory reset of the filesystem you follow a similar procedure as
 you did to enter safe mode, but release USR on green+orange:
 
-1. Connect the stalya to USB so it powers up.
+1. Connect the simpleRTK to USB so it powers up.
 2. Hold down the USR switch.
 3. While still holding down USR, press and release the RST switch.
 4. The LEDs will then cycle green to orange to green+orange and back again.
@@ -54,7 +54,7 @@ you did to enter safe mode, but release USR on green+orange:
    then let go of the USR switch.
 6. The green and orange LEDs should flash quickly 4 times.
 7. The red LED will turn on (so red, green and orange are now on).
-8. The stalya is now resetting the filesystem (this takes a few seconds).
+8. The simpleRTK is now resetting the filesystem (this takes a few seconds).
 9. The LEDs all turn off.
 10. You now have a reset filesystem, and are in safe mode.
 11. Press and release the RST switch to boot normally.

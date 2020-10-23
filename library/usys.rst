@@ -110,7 +110,7 @@ Constants
 
    The platform that MicroPython is running on. For OS/RTOS ports, this is
    usually an identifier of the OS, e.g. ``"linux"``. For baremetal ports it
-   is an identifier of a board, e.g. ``"pyboard"`` for the original MicroPython
+   is an identifier of a board, e.g. ``"simpleRTK"`` for the original MicroPython
    reference board. It thus can be used to distinguish one board from another.
    If you need to check whether your program runs on MicroPython (vs other
    Python implementation), use `usys.implementation` instead.

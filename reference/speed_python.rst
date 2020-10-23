@@ -319,11 +319,11 @@ Accessing hardware directly
 
 .. note::
 
-    Code examples in this section are given for the Pyboard. The techniques
+    Code examples in this section are given for the simpleRTK. The techniques
     described however may be applied to other MicroPython ports too.
 
 This comes into the category of more advanced programming and involves some knowledge
-of the target MCU. Consider the example of toggling an output pin on the Pyboard. The
+of the target MCU. Consider the example of toggling an output pin on the simpleRTK. The
 standard approach would be to write
 
 .. code:: python

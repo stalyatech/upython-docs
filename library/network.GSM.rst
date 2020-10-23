@@ -48,7 +48,11 @@ Methods
 
 .. method:: GSM.imei()
 
-    Scan for the available wireless networks.
+    Get modem IMEI number as a string.
+
+.. method:: GSM.imsi()
+
+    Get SIM card IMSI number as a string.
 
 .. method:: GSM.isconnected()
 
@@ -83,3 +87,85 @@ Methods
    imsi           GSM IMSI number (string)
    qos            GSM quality of service value (tuple)
    =============  ===========
+
+Socket sample with GSM NIC
+--------------------------
+
+::
+
+    from sty import UART
+    import sty, network
+
+    pwr = Pin('PWR_GSM', Pin.OUT_OD)
+    pon = Pin('M2M_PON', Pin.OUT_OD)
+    rst = Pin('M2M_RST', Pin.OUT_OD)
+    mon = Pin('M2M_MON', Pin.IN)
+    nic = network.GSM(UART('GSM', 115200, flow=UART.RTS|UART.CTS, rxbuf=1024, dma=False), pwr_pin=pwr, pon_pin=pon, rst_pin=rst, mon_pin=mon)
+
+    nic.connect()
+    while not nic.isconnected():
+        pass
+
+    ifconfig = nic.ifconfig()
+    print('GSM connection done: %s' % ifconfig[0])
+    print('IMEI Number: %s' % nic.imei())
+    print('IMSI Number: %s' % nic.imsi())
+    qos = nic.qos()
+    print('Signal Quality: %d,%d' % (qos[0],qos[1]))
+
+    addr = usocket.getaddrinfo('micropython.org', 80)[0][-1]
+    print('Host: %s:%d' % (addr[0], addr[1]))
+    sock = usocket.socket(usocket.AF_INET, usocket.SOCK_STREAM)
+    sock.connect(addr)
+    sock.send(b'GET / HTTP/1.1\r\nHost: ardusimple.com\r\n\r\n')
+
+    sock.settimeout(10.0)
+    try:
+        data = sock.recv(1000)
+        print(data)
+    except:
+        print('Timeout!\r\n')
+
+    sock.close()
+
+SMS Send and receive sample
+---------------------------
+
+::
+
+    from sty import UART
+    import sty, network
+
+    def OnSmsReceived(msg):
+        print(msg)
+
+    pwr = Pin('PWR_GSM', Pin.OUT_OD)
+    pon = Pin('M2M_PON', Pin.OUT_OD)
+    rst = Pin('M2M_RST', Pin.OUT_OD)
+    mon = Pin('M2M_MON', Pin.IN)
+    nic = network.GSM(UART('GSM', 115200, flow=UART.RTS|UART.CTS, rxbuf=1024, dma=False), pwr_pin=pwr, pon_pin=pon, rst_pin=rst, mon_pin=mon)
+    sms = nic.SMS(OnSmsReceived)
+
+    nic.connect()
+    while not nic.isconnected():
+        pass
+
+    ifconfig = nic.ifconfig()
+    print('GSM connection done: %s' % ifconfig[0])
+    print('IMEI Number: %s' % nic.imei())
+    print('IMSI Number: %s' % nic.imsi())
+    qos = nic.qos()
+    print('Signal Quality: %d,%d' % (qos[0],qos[1]))
+
+    sms.send('0555XXXXXXX', 'Message from simpleRTK')
+    while sms.isbusy():
+        pass
+
+    if sms.iserror():
+        print('SMS send error!\r\n')
+    else:
+        print('SMS has been sent\r\n')
+    print('Now we are waiting for any message...\r\n')
+
+    while True:
+        pass

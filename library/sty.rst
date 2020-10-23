@@ -73,7 +73,7 @@ Reset related functions
 
 .. function:: hard_reset()
 
-   Resets the pyboard in a manner similar to pushing the external RESET
+   Resets the simpleRTK in a manner similar to pushing the external RESET
    button.
 
 .. function:: bootloader()
@@ -164,7 +164,7 @@ Power related functions
 
 .. function:: stop()
 
-   Put the pyboard in a "sleeping" state.
+   Put the simpleRTK in a "sleeping" state.
 
    This reduces power consumption to less than 500 uA.  To wake from this
    sleep state requires an external interrupt or a real-time-clock event.
@@ -174,7 +174,7 @@ Power related functions
 
 .. function:: standby()
 
-   Put the pyboard into a "deep sleep" state.
+   Put the simpleRTK into a "deep sleep" state.
 
    This reduces power consumption to less than 50 uA.  To wake from this
    sleep state requires a real-time-clock event, or an external interrupt

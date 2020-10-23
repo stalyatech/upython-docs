@@ -5,7 +5,7 @@ class Servo -- 3-wire hobby servo driver
 ========================================
 
 Servo objects control standard hobby servo motors with 3-wires (ground, power,
-signal).  There are 4 positions on the pyboard where these motors can be plugged
+signal).  There are 4 positions on the simpleRTK where these motors can be plugged
 in: pins QP1 through QP4 are the signal pins, and next to them are 4 sets of power
 and ground pins.
 

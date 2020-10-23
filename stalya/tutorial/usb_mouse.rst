@@ -1,7 +1,7 @@
-Making the stalya act as a USB mouse
-=====================================
+Making the simpleRTK act as a USB mouse
+=======================================
 
-The stalya is a USB device, and can configured to act as a mouse instead
+The simpleRTK is a USB device, and can configured to act as a mouse instead
 of the default USB flash drive.
 
 To do this we must first edit the ``boot.py`` file to change the USB
@@ -27,19 +27,19 @@ needs to work is::
     import sty
     sty.usb_mode('VCP+HID')
 
-This tells the stalya to configure itself as a VCP (Virtual COM Port,
+This tells the simpleRTK to configure itself as a VCP (Virtual COM Port,
 ie serial port) and HID (human interface device, in our case a mouse)
 USB device when it boots up.
 
-Eject/unmount the stalya drive and reset it using the RST switch.
-Your PC should now detect the stalya as a mouse!
+Eject/unmount the simpleRTK drive and reset it using the RST switch.
+Your PC should now detect the simpleRTK as a mouse!
 
 Sending mouse events by hand
 ----------------------------
 
 To get the py-mouse to do anything we need to send mouse events to the PC.
 We will first do this manually using the REPL prompt.  Connect to your
-stalya using your serial program and type the following (no need to type
+simpleRTK using your serial program and type the following (no need to type
 the ``#`` and text following it)::
 
     >>> hid = sty.USB_HID()
@@ -68,12 +68,12 @@ playing around with different numbers.
 Making a mouse with the accelerometer
 -------------------------------------
 
-Now lets make the mouse move based on the angle of the stalya, using the
+Now lets make the mouse move based on the angle of the simpleRTK, using the
 accelerometer.  The following code can be typed directly at the REPL prompt,
 or put in the ``main.py`` file.  Here, we'll put in in ``main.py`` because to do
 that we will learn how to go into safe mode.
 
-At the moment the stalya is acting as a serial USB device and an HID (a mouse).
+At the moment the simpleRTK is acting as a serial USB device and an HID (a mouse).
 So you cannot access the filesystem to edit your ``main.py`` file.
 
 You also can't edit your ``boot.py`` to get out of HID-mode and back to normal
@@ -91,7 +91,7 @@ the [safe mode tutorial](tut-reset), but we repeat the instructions here:
 6. You are now in safe mode.
 
 In safe mode, the ``boot.py`` and ``main.py`` files are not executed, and so
-the stalya boots up with default settings.  This means you now have access
+the simpleRTK boots up with default settings.  This means you now have access
 to the filesystem (the USB drive should appear), and you can edit ``main.py``.
 (Leave ``boot.py`` as-is, because we still want to go back to HID-mode after
 we finish editing ``main.py``.)
@@ -108,7 +108,7 @@ In ``main.py`` put the following code::
         hid.send((0, accel.x(), accel.y(), 0))
         sty.delay(20)
 
-Save your file, eject/unmount your stalya drive, and reset it using the RST
+Save your file, eject/unmount your simpleRTK drive, and reset it using the RST
 switch.  It should now act as a mouse, and the angle of the board will move
 the mouse around.  Try it out, and see if you can make the mouse stand still!
 
@@ -117,10 +117,10 @@ Press the USR switch to stop the mouse motion.
 You'll note that the y-axis is inverted.  That's easy to fix: just put a
 minus sign in front of the y-coordinate in the ``hid.send()`` line above.
 
-Restoring your stalya to normal
---------------------------------
+Restoring your simpleRTK to normal
+----------------------------------
 
-If you leave your stalya as-is, it'll behave as a mouse everytime you plug
+If you leave your simpleRTK as-is, it'll behave as a mouse everytime you plug
 it in.  You probably want to change it back to normal.  To do this you need
 to first enter safe mode (see above), and then edit the ``boot.py`` file.
 In the ``boot.py`` file, comment out (put a # in front of) the line with the
@@ -128,5 +128,5 @@ In the ``boot.py`` file, comment out (put a # in front of) the line with the
 
     #sty.usb_mode('VCP+HID') # act as a serial device and a mouse
 
-Save your file, eject/unmount the drive, and reset the stalya.  It is now
+Save your file, eject/unmount the drive, and reset the simpleRTK.  It is now
 back to normal operating mode.

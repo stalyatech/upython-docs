@@ -49,8 +49,17 @@ Constructors
 .. class:: sty.UART(bus, ...)
 
    Construct a UART object on the given bus.
-   For simpleRTK-SBC ``bus`` can be 'ZED1', 'ZED2', 'ZED3', 'GSM',
+   For simpleRTK ``bus`` can be 'ZED1', 'ZED2', 'ZED3', 'GSM',
    'SRV', 'XBEE_LP' or 'XBEE_HP'.
+
+     - ``ZED1`` is the on board high precision GPS1 bus.
+     - ``ZED2`` is the on board high precision GPS2 bus.
+     - ``ZED3`` is the on board high precision GPS3 bus.
+     - ``GSM`` is the on board 4G LTE modem bus.
+     - ``SRV`` is the external service bus.
+     - ``XBEE_LP`` is the on board low power XBee module bus.
+     - ``XBEE_HP`` is the on board high power XBee module bus.
+
    With no additional parameters, the UART object is created but not
    initialised (it has the settings from the last initialisation of
    the bus, if any).  If extra arguments are given, the bus is initialised.
@@ -151,6 +160,120 @@ Methods
    of 13 bits.
    Return value: ``None``.
 
+.. method:: UART.send(buf)
+
+   Write the buffer/string of bytes/char to the bus.  If characters are 7 or 8 bits wide
+   then each byte is one character.  If characters are 9 bits wide then two
+   bytes are used for each character (little endian), and ``buf`` must contain
+   an even number of bytes. If DMA is enabled it uses the DMA engine to transfer data.
+
+.. method:: UART.istxbusy()
+
+   Returns the on going transfer status.
+
+.. method:: UART.callback(fun)
+
+   Register a function to be called when any data is received:
+
+   - ``fun`` is the function to be called when the buffer becomes non empty.
+
+   The callback function takes two arguments the first is the uart object it self the second is
+   a byte array that contains the received data.
+
+   Data receive sample with callback::
+
+      from sty import UART
+
+      def OnDataRecvFromZED1(uart, msg):
+         print(msg)
+
+      zed1 = UART('ZED1', 115200, rxbuf=0)
+      zed1.callback(OnDataRecvFromZED1)
+
+.. method:: UART.parser(type, rxbuf=256, rxcallback=None, frcallback=None)
+
+   Initialise the UART bus framer/parser with the given parameters:
+
+     - ``type`` is the protocol type. Can be ``UART.ParserNONE``, ``UART.ParserNMEA``,
+       ``UART.ParserUBX`` or ``UART.ParserRTCM``.
+     - ``rxbuf`` is the character length of the protocol buffer (0 to disable).
+     - ``rxcallback`` is the function that will call on protocol message received.
+     - ``frcallback`` is the function that will call on protocol message parsed.
+
+.. method:: UART.process(type)
+
+   Process queued protocol message. ``type`` is the protocol type. The method returns 
+   the number of bytes message. If there is no valid message that belong to the type
+   it will return with (-1).
+
+.. method:: UART.parse_nmea(buf)
+
+   Start parsing procedure of buffer that contains NMEA message. On success the function that
+   has been registered with ``frcallback`` parameter will be called.
+
+   Process NMEA messages on GPS::
+
+      from sty import UART
+
+      def OnNmeaMsg(uart, msg):
+         uart.parse_nmea(msg)
+
+      def OnNmeaParsed(type, items):
+         print(type)
+         print(items)
+
+      zed1 = UART('ZED1', 115200, rxbuf=0, dma=False)
+      zed1.parser(UART.ParserNMEA, rxbuf=256, rxcallback=OnNmeaMsg,  frcallback=OnNmeaParsed)
+
+      while True:
+         zed1.process(UART.ParserNMEA)
+
+.. method:: UART.parse_ubx(buf)
+
+   Start parsing procedure of buffer that contains UBLOX message. On success the function that
+   has been registered with ``frcallback`` parameter will be called.
+
+   Process UBX messages on GPS::
+
+      from sty import UART
+
+      def OnUbloxMsg(uart, msg):
+         uart.parse_ubx(msg)
+
+      def OnUbloxParsed(type, items):
+         if (type == 'NAV_PVT'):
+            print('NAV_PVT')
+         if (type == 'NAV_RELPOSNED'):
+            print('NAV_RELPOSNED:')
+         if (type == 'NAV_EOE'):
+            print('NAV_EOE:')
+         print(items)
+
+      zed1 = UART('ZED1', 115200, rxbuf=0, dma=False)
+      zed1.parser(UART.ParserUBX, rxbuf=256, rxcallback=OnUbloxMsg, frcallback=OnUbloxParsed)
+
+      while True:
+         zed1.process(UART.ParserUBX)
+
+.. method:: UART.connect(obj1=None, obj2=None, obj3=None, obj4=None)
+
+   Redirects the selected UART buses to the caller UART bus:
+
+     - ``obj1`` is the 1st uart object.
+     - ``obj2`` is the 2nd uart object.
+     - ``obj3`` is the 3rd uart object.
+     - ``obj4`` is the 4th uart object.
+   
+   Redirect the XBee low power module messages to the all GPS::
+
+      from sty import UART
+
+      zed1 = UART('ZED1', 115200, rxbuf=0, dma=True)     # GPS1 bus
+      zed2 = UART('ZED2', 115200, rxbuf=0, dma=True)     # GPS2 bus
+      zed3 = UART('ZED3', 115200, rxbuf=0, dma=True)     # GPS3 bus
+      xblp = UART('XBEE_LP', 115200, rxbuf=0, dma=False) # XBee low power bus
+      xblp.connect(obj1=zed1, obj2=zed2, obj3=zed3)      # Redirect all data from xbee lp to all zeds
+
 Constants
 ---------
 
@@ -159,18 +282,24 @@ Constants
 
    to select the flow control type.
 
+.. data:: UART.IRQ_RXIDLE
+
+   to select the receive interrupt type.
+
+.. data:: UART.ParserNONE
+          UART.ParserNMEA
+          UART.ParserUBX
+          UART.ParserRTCM
+
+   to select the special protocol parser type.
+
 Flow Control
 ------------
 
-On Pyboards V1 and V1.1 ``UART(2)`` and ``UART(3)`` support RTS/CTS hardware flow control
+On simpleRTK-SBC V1.0 ``UART(7)`` support RTS/CTS hardware flow control
 using the following pins:
 
-    - ``UART(2)`` is on: ``(TX, RX, nRTS, nCTS) = (X3, X4, X2, X1) = (PA2, PA3, PA1, PA0)``
-    - ``UART(3)`` is on :``(TX, RX, nRTS, nCTS) = (Y9, Y10, Y7, Y6) = (PB10, PB11, PB14, PB13)``
-
-On the Pyboard Lite only ``UART(2)`` supports flow control on these pins:
-
-    ``(TX, RX, nRTS, nCTS) = (X1, X2, X4, X3) = (PA2, PA3, PA1, PA0)``
+   - ``UART(7)`` is on: ``(TX, RX, nRTS, nCTS) = (GSM_TXD, GSM_RXD, GSM_RTS, GSM_CTS) = (PE8, PE7, PE9, PE10)``
 
 In the following paragraphs the term "target" refers to the device connected to
 the UART.
@@ -178,15 +307,15 @@ the UART.
 When the UART's ``init()`` method is called with ``flow`` set to one or both of
 ``UART.RTS`` and ``UART.CTS`` the relevant flow control pins are configured.
 ``nRTS`` is an active low output, ``nCTS`` is an active low input with pullup
-enabled. To achieve flow control the Pyboard's ``nCTS`` signal should be connected
-to the target's ``nRTS`` and the Pyboard's ``nRTS`` to the target's ``nCTS``.
+enabled. To achieve flow control the simpleRTK's ``nCTS`` signal should be connected
+to the target's ``nRTS`` and the simpleRTK's ``nRTS`` to the target's ``nCTS``.
 
-CTS: target controls Pyboard transmitter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CTS: target controls simpleRTK transmitter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If CTS flow control is enabled the write behaviour is as follows:
 
-If the Pyboard's ``UART.write(buf)`` method is called, transmission will stall for
+If the simpleRTK's ``UART.write(buf)`` method is called, transmission will stall for
 any periods when ``nCTS`` is ``False``. This will result in a timeout if the entire
 buffer was not transmitted in the timeout period. The method returns the number of
 bytes written, enabling the user to write the remainder of the data if required. In
@@ -197,8 +326,8 @@ If ``UART.writechar()`` is called when ``nCTS`` is ``False`` the method will tim
 out unless the target asserts ``nCTS`` in time. If it times out ``OSError 116``
 will be raised. The character will be transmitted as soon as the target asserts ``nCTS``.
 
-RTS: Pyboard controls target's transmitter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+RTS: simpleRTK controls target's transmitter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If RTS flow control is enabled, behaviour is as follows:
 

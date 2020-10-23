@@ -1,11 +1,11 @@
 .. _stalya_tutorial:
 
-MicroPython tutorial for the stalya boards
-==========================================
+MicroPython tutorial for the simpleRTK
+======================================
 
-This tutorial is intended to get you started with your stalya boards.
-All you need is a stalya boards and a micro-USB cable to connect 
-it to your PC. If it is your first time, it is recommended to follow
+This tutorial is intended to get you started with your simpleRTK.
+All you need is a simpleRTK and a USB Type-C cable to connect it to
+your PC.  If it is your first time, it is recommended to follow
 the tutorial through in the order below.
 
 .. toctree::

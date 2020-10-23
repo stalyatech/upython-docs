@@ -1,27 +1,27 @@
 Controlling hobby servo motors
 ==============================
 
-There are 4 dedicated connection points on the stalya for connecting up
+There are 4 dedicated connection points on the simpleRTK for connecting up
 hobby servo motors (see eg
 `Wikipedia <http://en.wikipedia.org/wiki/Servo_%28radio_control%29>`__).
-These motors have 3 wires: ground, power and signal.  On the stalya you
+These motors have 3 wires: ground, power and signal.  On the simpleRTK you
 can connect them in the bottom right corner, with the signal pin on the
 far right.  Pins X1, X2, X3 and X4 are the 4 dedicated servo signal pins.
 
-.. image:: img/pyboard_servo.jpg
+.. image:: img/simplertk_servo.jpg
 
 In this picture there are male-male double adaptors to connect the servos
-to the header pins on the stalya.
+to the header pins on the simpleRTK.
 
 The ground wire on a servo is usually the darkest coloured one, either
 black or dark brown.  The power wire will most likely be red.
 
 The power pin for the servos (labelled VIN) is connected directly to the
-input power source of the stalya.  When powered via USB, VIN is powered
-through a diode by the 5V USB power line.  Connect to USB, the stalya can
+input power source of the simpleRTK.  When powered via USB, VIN is powered
+through a diode by the 5V USB power line.  Connect to USB, the simpleRTK can
 power at least 4 small to medium sized servo motors.
 
-If using a battery to power the stalya and run servo motors, make sure it
+If using a battery to power the simpleRTK and run servo motors, make sure it
 is not greater than 6V, since this is the maximum voltage most servo motors
 can take.  (Some motors take only up to 4.8V, so check what type you are
 using.)
@@ -91,7 +91,7 @@ of 1500 microseconds corresponds to a stopped motor.  A pulse width
 smaller or larger than this means rotate one way or the other, at a
 given speed.
 
-On the stalya, the servo object for a continuous rotation motor is
+On the simpleRTK, the servo object for a continuous rotation motor is
 the same as before.  In fact, using ``angle`` you can set the speed.  But
 to make it easier to understand what is intended, there is another method
 called ``speed`` which sets the speed::

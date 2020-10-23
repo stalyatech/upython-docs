@@ -152,8 +152,7 @@ Constants
 
     Reset causes.
 
-.. data:: machine.WLAN_WAKE
-          machine.PIN_WAKE
+.. data:: machine.PIN_WAKE
           machine.RTC_WAKE
 
     Wake-up reasons.

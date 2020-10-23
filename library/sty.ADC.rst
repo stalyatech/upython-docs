@@ -132,7 +132,7 @@ Appropriate scaling is handled according to reference voltage used (usually 3.3V
 The temperature sensor on the chip is factory calibrated and allows to read the die temperature
 to +/- 1 degree centigrade. Although this sounds pretty accurate, don't forget that the MCU's internal
 temperature is measured. Depending on processing loads and I/O subsystems active the die temperature
-may easily be tens of degrees above ambient temperature. On the other hand a pyboard woken up after a
+may easily be tens of degrees above ambient temperature. On the other hand a simpleRTK woken up after a
 long standby period will show correct ambient temperature within limits mentioned above.
 
 The ``ADCAll`` ``read_core_vbat()``, ``read_vref()`` and ``read_core_vref()`` methods read
@@ -146,9 +146,9 @@ to the backup battery, the voltage divider is only active during ADC conversion.
 
 ``read_vref()`` is evaluated by measuring the internal voltage reference and backscale it using
 factory calibration value of the internal voltage reference. In most cases the reading would be close
-to 3.3V. If the pyboard is operated from a battery, the supply voltage may drop to values below 3.3V.
-The pyboard will still operate fine as long as the operating conditions are met. With proper settings
-of MCU clock, flash access speed and programming mode it is possible to run the pyboard down to
+to 3.3V. If the simpleRTK is operated from a battery, the supply voltage may drop to values below 3.3V.
+The simpleRTK will still operate fine as long as the operating conditions are met. With proper settings
+of MCU clock, flash access speed and programming mode it is possible to run the simpleRTK down to
 2 V and still get useful ADC conversion.
 
 It is very important to make sure analog input voltages never exceed actual supply voltage.

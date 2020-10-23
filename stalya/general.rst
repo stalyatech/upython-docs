@@ -1,27 +1,27 @@
 .. _stalya_general:
 
-General information about the stalya boards
-===========================================
+General information about the simpleRTK
+=======================================
 
 .. contents::
 
 Local filesystem and SD card
 ----------------------------
 
-There is a small internal filesystem (a drive) on the stalya, called ``/flash``,
+There is a small internal filesystem (a drive) on the simpleRTK, called ``/flash``,
 which is stored within the microcontroller's flash memory.  If a micro SD card
 is inserted into the slot, it is available as ``/sd``.
 
-When the stalya boards boots up, it needs to choose a filesystem to boot from.  
-If there is no SD card, then it uses the internal filesystem ``/flash`` as the boot
+When the simpleRTK boots up, it needs to choose a filesystem to boot from.  If
+there is no SD card, then it uses the internal filesystem ``/flash`` as the boot
 filesystem, otherwise, it uses the SD card ``/sd``. After the boot, the current
 directory is set to one of the directories above.
 
 If needed, you can prevent the use of the SD card by creating an empty file
-called ``/flash/SKIPSD``.  If this file exists when the stalya boots
-up then the SD card will be skipped and the stalya will always boot from the
+called ``/flash/SKIPSD``.  If this file exists when the simpleRTK boots
+up then the SD card will be skipped and the simpleRTK will always boot from the
 internal filesystem (in this case the SD card won't be mounted but you can still
-mount and use it later in your program using ``os.mount``.
+mount and use it later in your program using ``os.mount``).
 
 (Note that on older versions of the board, ``/flash`` is called ``0:/`` and ``/sd``
 is called ``1:/``).
@@ -34,12 +34,12 @@ The filesystem will be available as a USB flash drive on your PC.  You can
 save files to the drive, and edit ``boot.py`` and ``main.py``.
 
 *Remember to eject (on Linux, unmount) the USB drive before you reset your
-stalya.*
+simpleRTK.*
 
 Boot modes
 ----------
 
-If you power up normally, or press the reset button, the stalya will boot
+If you power up normally, or press the reset button, the simpleRTK will boot
 into standard mode: the ``boot.py`` file will be executed first, then the
 USB will be configured, then ``main.py`` will run.
 
@@ -71,10 +71,10 @@ There are currently 2 kinds of errors that you might see:
 2. If all 4 LEDs cycle on and off slowly, then there was a hard fault.
    This cannot be recovered from and you need to do a hard reset.
 
-Guide for using the stalya with Windows
-----------------------------------------
+Guide for using the simpleRTK with Windows
+------------------------------------------
 
-The following PDF guide gives information about using the stalya with Windows,
+The following PDF guide gives information about using the simpleRTK with Windows,
 including setting up the serial prompt and downloading new firmware using
 DFU programming:
 `PDF guide <http://micropython.org/resources/Micro-Python-Windows-setup.pdf>`__.

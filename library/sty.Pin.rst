@@ -230,7 +230,7 @@ Usage Model::
 x3_af will now contain an array of PinAF objects which are available on
 pin X3.
 
-For the pyboard, x3_af would contain:
+For the simpleRTK, x3_af would contain:
     [Pin.AF1_TIM2, Pin.AF2_TIM5, Pin.AF3_TIM9, Pin.AF7_USART2]
 
 Normally, each peripheral would configure the af automatically, but sometimes

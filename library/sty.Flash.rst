@@ -4,7 +4,7 @@
 class Flash -- access to built-in flash storage
 ===============================================
 
-The Flash class allows direct access to the primary flash device on the pyboard.
+The Flash class allows direct access to the primary flash device on the simpleRTK.
 
 In most cases, to store persistent data on the device, you'll want to use a
 higher-level abstraction, for example the filesystem via Python's standard file
@@ -48,6 +48,6 @@ Methods
 Hardware Note
 -------------
 
-On boards with external spiflash (e.g. Pyboard D), the MicroPython firmware will
+On boards with external spiflash the MicroPython firmware will
 be configured to use that as the primary flash storage. On all other boards, the
 internal flash inside the :term:`MCU` will be used.

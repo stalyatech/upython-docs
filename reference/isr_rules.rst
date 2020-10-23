@@ -75,7 +75,7 @@ example causes two LED's to flash at different rates.
 
 .. code:: python
 
-    import pyb, micropython
+    import sty, micropython
     micropython.alloc_emergency_exception_buf(100)
     class Foo(object):
         def __init__(self, timer, led):
@@ -84,8 +84,8 @@ example causes two LED's to flash at different rates.
         def cb(self, tim):
             self.led.toggle()
 
-    red = Foo(pyb.Timer(4, freq=1), pyb.LED(1))
-    green = Foo(pyb.Timer(2, freq=0.8), pyb.LED(2))
+    red = Foo(sty.Timer(4, freq=1), sty.LED(1))
+    green = Foo(sty.Timer(2, freq=0.8), sty.LED(2))
 
 In this example the ``red`` instance associates timer 4 with LED 1: when a timer 4 interrupt occurs ``red.cb()``
 is called causing LED 1 to change state. The ``green`` instance operates similarly: a timer 2 interrupt
@@ -114,7 +114,7 @@ creates a ``bytearray`` instance and a boolean flag. The ISR method assigns data
 the flag. The memory allocation occurs in the main program code when the object is instantiated rather than in the ISR.
 
 The MicroPython library I/O methods usually provide an option to use a pre-allocated buffer. For
-example ``pyb.i2c.recv()`` can accept a mutable buffer as its first argument: this enables its use in an ISR.
+example ``sty.i2c.recv()`` can accept a mutable buffer as its first argument: this enables its use in an ISR.
 
 A means of creating an object without employing a class or globals is as follows:
 
@@ -140,7 +140,7 @@ and to pass that reference in the ISR. For example:
         def __init__(self):
             self.bar_ref = self.bar  # Allocation occurs here
             self.x = 0.1
-            tim = pyb.Timer(4)
+            tim = sty.Timer(4)
             tim.init(freq=2)
             tim.callback(self.cb)
 
@@ -186,7 +186,7 @@ Overcoming the float limitation
 
 In general it is best to avoid using floats in ISR code: hardware devices normally handle integers and conversion
 to floats is normally done in the main loop. However there are a few DSP algorithms which require floating point.
-On platforms with hardware floating point (such as the Pyboard) the inline ARM Thumb assembler can be used to work
+On platforms with hardware floating point (such as the simpleRTK) the inline ARM Thumb assembler can be used to work
 round this limitation. This is because the processor stores float values in a machine word; values can be shared
 between the ISR and main program code via an array of floats.
 
@@ -288,12 +288,12 @@ An example of a critical section of code is one which accesses more than one var
 the interrupt happens to occur between accesses to the individual variables, their values will be inconsistent. This is
 an instance of a hazard known as a race condition: the ISR and the main program loop race to alter the variables. To
 avoid inconsistency a means must be employed to ensure that the ISR does not alter the values for the duration of
-the critical section. One way to achieve this is to issue ``pyb.disable_irq()`` before the start of the section, and
-``pyb.enable_irq()`` at the end. Here is an example of this approach:
+the critical section. One way to achieve this is to issue ``sty.disable_irq()`` before the start of the section, and
+``sty.enable_irq()`` at the end. Here is an example of this approach:
 
 .. code:: python
 
-    import pyb, micropython, array
+    import sty, micropython, array
     micropython.alloc_emergency_exception_buf(100)
 
     class BoundsException(Exception):
@@ -306,22 +306,22 @@ the critical section. One way to achieve this is to issue ``pyb.disable_irq()`` 
     def callback1(t):
         global data, index
         for x in range(5):
-            data[index] = pyb.rng() # simulate input
+            data[index] = sty.rng() # simulate input
             index += 1
             if index >= ARRAYSIZE:
                 raise BoundsException('Array bounds exceeded')
 
-    tim4 = pyb.Timer(4, freq=100, callback=callback1)
+    tim4 = sty.Timer(4, freq=100, callback=callback1)
 
     for loop in range(1000):
         if index > 0:
-            irq_state = pyb.disable_irq() # Start of critical section
+            irq_state = sty.disable_irq() # Start of critical section
             for x in range(index):
                 print(data[x])
             index = 0
-            pyb.enable_irq(irq_state) # End of critical section
+            sty.enable_irq(irq_state) # End of critical section
             print('loop {}'.format(loop))
-        pyb.delay(1)
+        sty.delay(1)
 
     tim4.callback(None)
 
@@ -374,12 +374,12 @@ Interrupts and the REPL
 Interrupt handlers, such as those associated with timers, can continue to run
 after a program terminates.  This may produce unexpected results where you might
 have expected the object raising the callback to have gone out of scope.  For
-example on the Pyboard:
+example on the simpleRTK:
 
 .. code:: python
 
     def bar():
-        foo = pyb.Timer(2, freq=4, callback=lambda t: print('.', end=''))
+        foo = sty.Timer(2, freq=4, callback=lambda t: print('.', end=''))
 
     bar()
 

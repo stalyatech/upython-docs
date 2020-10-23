@@ -126,12 +126,13 @@ that platform.
 
 To write portable code use functions and classes from the :mod:`machine` module.
 To access platform-specific hardware use the appropriate library, e.g.
-:mod:`sty` in the case of the stalya boards.
+:mod:`sty` in the case of the simpleRTK.
 
-Libraries specific to the stalya
----------------------------------
 
-The following libraries are specific to the stalya boards.
+Libraries specific to the simpleRTK
+-----------------------------------
+
+The following libraries are specific to the simpleRTK.
 
 .. toctree::
   :maxdepth: 2
