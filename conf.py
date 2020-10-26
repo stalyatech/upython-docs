@@ -22,9 +22,9 @@ import os
 sys.path.insert(0, os.path.abspath('.'))
 
 # The members of the html_context dict are available inside topindex.html
-micropy_version = os.getenv('MICROPY_VERSION') or 'latest'
-micropy_all_versions = (os.getenv('MICROPY_ALL_VERSIONS') or 'latest').split(',')
-url_pattern = '%s/en/%%s' % (os.getenv('MICROPY_URL_PREFIX') or '/',)
+micropy_version = os.getenv('MICROPY_VERSION') or 'FW1.2'
+micropy_all_versions = (os.getenv('MICROPY_ALL_VERSIONS') or 'FW1.0,FW1.1,FW1.2').split(',')
+url_pattern = '%s/en/%%s' % (os.getenv('MICROPY_URL_PREFIX') or 'stalya.com',)
 html_context = {
     'cur_version':micropy_version,
     'all_versions':[

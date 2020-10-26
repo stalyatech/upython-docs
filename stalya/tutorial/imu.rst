@@ -36,7 +36,7 @@ We will start by using the accelerometer to turn on a light if it is not flat. :
 
         sty.delay(100)
 
-We create Accel and LED objects, then get the value of the x direction of the
+We create Imu and LED objects, then get the value of the x direction of the
 accelerometer. If the magnitude of x is bigger than a certain value ``SENSITIVITY``,
 then the LED turns on, otherwise it turns off. The loop has a small ``sty.delay()``
 otherwise the LED flashes annoyingly when the value of x is close to
@@ -56,11 +56,11 @@ use the ``y()`` value and more LEDs we can turn the simpleRTK into a spirit leve
     xlights = (sty.LED(2), sty.LED(3))
     ylights = (sty.LED(1), sty.LED(4))
 
-    accel = sty.Accel()
+    imu = sty.Imu()
     SENSITIVITY = 3
 
     while True:
-        x = accel.x()
+        x = imu.ax()
         if x > SENSITIVITY: 
             xlights[0].on()
             xlights[1].off()
@@ -71,7 +71,7 @@ use the ``y()`` value and more LEDs we can turn the simpleRTK into a spirit leve
             xlights[0].off()
             xlights[1].off()
 
-        y = accel.y()
+        y = imu.ay()
         if y > SENSITIVITY: 
             ylights[0].on()
             ylights[1].off()

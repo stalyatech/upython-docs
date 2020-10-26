@@ -1,9 +1,16 @@
 <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
-    <span class="fa fa-book"> External Links</span>
+    <span class="fa fa-book"> Versions and External Links</span>
+    {{ cur_version }}
     <span class="fa fa-caret-down"></span>
   </span>
   <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      {% for slug, url in all_versions %}
+        <dd><a href="{{ url }}">{{ slug }}</a></dd>
+      {% endfor %}
+    </dl>
     <hr/>
     <dl>
       <dt>External links</dt>

@@ -4,7 +4,7 @@
 class Imu -- Inertial Measurement Unit
 ======================================
 
-Imu is an object that controls the accelerometer, gyroscope and quaternions.  
+Imu is an object that controls the accelerometer, gyroscope and AHRS filters.  
 
 Example usage::
 
@@ -57,14 +57,7 @@ Methods
 
 .. method:: Imu.read()
 
-   Update the all accelerometer and gyroscope values. There is no return value.
-
-.. method:: Imu.filter(dt)
-
-   Calculate the quaternions using accelerometer and gyroscope values. Returns
-   q0, q1, q2 and q3.
-
-     - ``dt`` is the sampling time.
+   Update the all accelerometer and gyroscope values. Return with ax, ay, az, gx, gy, gz and dt.
 
 .. method:: Imu.read_accel(reg)
 
@@ -92,19 +85,15 @@ Methods
      - ``reg`` is the register address.
      - ``val`` is the register value.
 
-Example roll and pitch calculation::
+Specific filter class implementations
+=====================================
 
-   import sty, math
+The following concrete classes implement the AHRS filter interface and
+provide a way to filter raw IMU data of various kinds.
 
-   def calcRollPitch(q, dt):
-      gx = 2 * (q[1]*q[3] - q[0]*q[2])
-      gy = 2 * (q[0]*q[1] + q[2]*q[3])
-      gz = q[0]*q[0] - q[1]*q[1] - q[2]*q[2] + q[3]*q[3]
-      roll  = math.atan(gy / math.sqrt(gx*gx + gz*gz)) * 57.29577951
-      pitch = math.atan(gx / math.sqrt(gy*gy + gz*gz)) * 57.29577951
-      print("DT:%6.3f #RP:%2.0f,%2.0f" % (dt, roll, pitch))
+.. toctree::
+   :maxdepth: 1
 
-   imu = sty.Imu()
-   while True:
-      dt = imu.read()
-      calcRollPitch(imu.filter(dt), dt)
+   Imu.DCM.rst
+   Imu.Mahony.rst
+   Imu.Madgwick.rst
