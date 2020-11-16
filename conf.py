@@ -22,8 +22,8 @@ import os
 sys.path.insert(0, os.path.abspath('.'))
 
 # The members of the html_context dict are available inside topindex.html
-micropy_version = os.getenv('MICROPY_VERSION') or 'FW1.2'
-micropy_all_versions = (os.getenv('MICROPY_ALL_VERSIONS') or 'FW1.0,FW1.1,FW1.2').split(',')
+micropy_version = os.getenv('MICROPY_VERSION') or 'FW1.5.7'
+micropy_all_versions = (os.getenv('MICROPY_ALL_VERSIONS') or 'FW1.5.7').split(',')
 url_pattern = '%s/en/%%s' % (os.getenv('MICROPY_URL_PREFIX') or 'stalya.com',)
 html_context = {
     'cur_version':micropy_version,

@@ -38,9 +38,11 @@ Methods
     argument is passed. Otherwise, query current state if no argument is
     provided. Most other methods require active interface.
 
-.. method:: GSM.connect()
+.. method:: GSM.connect(callback)
 
-    Activate ("up") network interface, connect to the service provider.
+    Activate ("up") network interface, connect to the service provider. 
+
+    - ``callback`` is the function to be called when the link up/down and service quality updated.
 
 .. method:: GSM.disconnect()
 
@@ -73,9 +75,12 @@ Methods
    multiple parameters can be set at once. For querying, parameters name should
    be quoted as a string, and only one parameter can be queries at time::
 
+    # Set GSM user name, password, access point name and SIM card pin number
+    nic.config(user='myuser', pwd='mypass', apn='internet', pin='1234')
     # Query params one by one
     print(nic.config('imei'))
     print(nic.config('imsi'))
+    print(nic.config('qos'))
 
    Following are commonly supported parameters (availability of a specific parameter
    depends on network technology type, driver, and :term:`MicroPython port`).
@@ -86,6 +91,11 @@ Methods
    imei           GSM IMEI number (string)
    imsi           GSM IMSI number (string)
    qos            GSM quality of service value (tuple)
+   user           GSM network user name (string)
+   pwd            GSM network password (string)
+   apn            GSM network Access Point Name (string)
+   pin            SIM card pin number (string)
+   mcc            Selected mobile country code (integer)
    =============  ===========
 
 Socket sample with GSM NIC
@@ -96,13 +106,19 @@ Socket sample with GSM NIC
     from sty import UART
     import sty, network
 
+    def OnGsmStatus(status):
+        print('Link: {}\r\nQoS: {}\r\nBER: {}'.format(status[0], status[1], status[2]))
+
     pwr = Pin('PWR_GSM', Pin.OUT_OD)
     pon = Pin('M2M_PON', Pin.OUT_OD)
     rst = Pin('M2M_RST', Pin.OUT_OD)
     mon = Pin('M2M_MON', Pin.IN)
     nic = network.GSM(UART('GSM', 115200, flow=UART.RTS|UART.CTS, rxbuf=1024, dma=False), pwr_pin=pwr, pon_pin=pon, rst_pin=rst, mon_pin=mon)
 
-    nic.connect()
+    # Configure the GSM parameters which you need
+    nic.config(user='gprs', pwd='gprs', apn='internet', pin='1234', mcc=28602)
+
+    nic.connect(OnGsmStatus)
     while not nic.isconnected():
         pass
 
@@ -136,6 +152,9 @@ SMS Send and receive sample
     from sty import UART
     import sty, network
 
+    def OnGsmStatus(status):
+        print('Link: {}\r\nQoS: {}\r\nBER: {}'.format(status[0], status[1], status[2]))
+
     def OnSmsReceived(msg):
         print(msg)
 
@@ -146,7 +165,10 @@ SMS Send and receive sample
     nic = network.GSM(UART('GSM', 115200, flow=UART.RTS|UART.CTS, rxbuf=1024, dma=False), pwr_pin=pwr, pon_pin=pon, rst_pin=rst, mon_pin=mon)
     sms = nic.SMS(OnSmsReceived)
 
-    nic.connect()
+    # Configure the GSM parameters which you need
+    nic.config(user='gprs', pwd='gprs', apn='internet', pin='1234', mcc=28602)
+
+    nic.connect(OnGsmStatus)
     while not nic.isconnected():
         pass
 

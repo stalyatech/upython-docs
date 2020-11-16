@@ -241,12 +241,7 @@ Methods
          uart.parse_ubx(msg)
 
       def OnUbloxParsed(type, items):
-         if (type == 'NAV_PVT'):
-            print('NAV_PVT')
-         if (type == 'NAV_RELPOSNED'):
-            print('NAV_RELPOSNED:')
-         if (type == 'NAV_EOE'):
-            print('NAV_EOE:')
+         print(type)
          print(items)
 
       zed1 = UART('ZED1', 115200, rxbuf=0, dma=False)
