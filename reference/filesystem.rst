@@ -161,7 +161,7 @@ enabled in a custom firmware build.
 ====================  =====  ===========  ===========
 Board                 FAT    littlefs v1  littlefs v2
 ====================  =====  ===========  ===========
-simpleRTK             Yes    No           No
+simpleRTK             Yes    No           Yes
 ====================  =====  ===========  ===========
 
 FAT
